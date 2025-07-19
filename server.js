@@ -49,5 +49,18 @@ app.get("/logout", (req, res) => {
     });
 });
 
+app.get("/api/user", (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({
+            id: req.user.id,
+            username: req.user.username,
+            discriminator: req.user.discriminator,
+            avatar: req.user.avatar
+        });
+    } else {
+        res.status(401).json({ error: "Not authenticated" });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
